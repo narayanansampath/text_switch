@@ -1,6 +1,6 @@
 name: text_switch
 description: A Flutter package for awesome text switch.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/narayanansampath/text_switch
 
 environment:
