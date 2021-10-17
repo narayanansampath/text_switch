@@ -116,6 +116,9 @@ class _TextSwitchState extends State<TextSwitch>
       _animationController.forward();
     }
     setState(() => value = !value);
-    widget.value == false ? widget.onChanged!(true) : widget.onChanged!(false);
+    final ValueChanged<bool>? onChanged = widget.onChanged;
+    if (onChanged != null) {
+      widget.value == false ? onChanged(true) : onChanged(false);
+    }
   }
 }
