@@ -3,18 +3,18 @@ library text_switch;
 import 'package:flutter/material.dart';
 
 class TextSwitch extends StatefulWidget {
-  final bool value;
-  final ValueChanged<bool> onChanged;
+  final bool? value;
+  final ValueChanged<bool>? onChanged;
   final Color activeColor;
   final Color inactiveColor;
   final String activeText;
   final String inactiveText;
   final Color textColor;
-  final Gradient gradient;
+  final Gradient? gradient;
   final Color borderColor;
 
   const TextSwitch(
-      {Key key,
+      {Key? key,
       this.value,
       this.onChanged,
       this.activeColor = Colors.white,
@@ -32,8 +32,8 @@ class TextSwitch extends StatefulWidget {
 
 class _TextSwitchState extends State<TextSwitch>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  bool value;
+  late AnimationController _animationController;
+  bool? value;
 
   @override
   void initState() {
@@ -41,8 +41,8 @@ class _TextSwitchState extends State<TextSwitch>
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 60));
     AlignmentTween(
-            begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
-            end: widget.value ? Alignment.centerLeft : Alignment.centerRight)
+            begin: widget.value! ? Alignment.centerRight : Alignment.centerLeft,
+            end: widget.value! ? Alignment.centerLeft : Alignment.centerRight)
         .animate(CurvedAnimation(
             parent: _animationController, curve: Curves.linear));
     value = widget.value;
@@ -77,7 +77,7 @@ class _TextSwitchState extends State<TextSwitch>
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: value ? widget.activeColor : Colors.transparent),
+                      color: value! ? widget.activeColor : Colors.transparent),
                   child: Text(
                     widget.activeText,
                     textAlign: TextAlign.center,
@@ -93,7 +93,7 @@ class _TextSwitchState extends State<TextSwitch>
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: value ? Colors.transparent : widget.activeColor),
+                      color: value! ? Colors.transparent : widget.activeColor),
                   child: Text(widget.inactiveText,
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -115,7 +115,7 @@ class _TextSwitchState extends State<TextSwitch>
     } else {
       _animationController.forward();
     }
-    setState(() => value = !value);
-    widget.value == false ? widget.onChanged(true) : widget.onChanged(false);
+    setState(() => value = !value!);
+    widget.value == false ? widget.onChanged!(true) : widget.onChanged!(false);
   }
 }
