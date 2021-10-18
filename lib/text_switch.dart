@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 
 class TextSwitch extends StatefulWidget {
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
   final Color activeColor;
   final Color inactiveColor;
   final String activeText;
   final String inactiveText;
   final Color textColor;
-  final Gradient gradient;
+  final Gradient? gradient;
   final Color borderColor;
 
   const TextSwitch(
-      {Key key,
-      this.value,
+      {Key? key,
+      required this.value,
       this.onChanged,
       this.activeColor = Colors.white,
       this.inactiveColor = Colors.grey,
@@ -32,8 +32,8 @@ class TextSwitch extends StatefulWidget {
 
 class _TextSwitchState extends State<TextSwitch>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  bool value;
+  late AnimationController _animationController;
+  late bool value;
 
   @override
   void initState() {
@@ -116,6 +116,9 @@ class _TextSwitchState extends State<TextSwitch>
       _animationController.forward();
     }
     setState(() => value = !value);
-    widget.value == false ? widget.onChanged(true) : widget.onChanged(false);
+    final ValueChanged<bool>? onChanged = widget.onChanged;
+    if (onChanged != null) {
+      widget.value == false ? onChanged(true) : onChanged(false);
+    }
   }
 }
