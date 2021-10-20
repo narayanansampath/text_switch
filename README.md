@@ -2,6 +2,15 @@
 
 A Flutter package for awesome text switch.
 
+## 🚀 Features
+
+1. Customize active and inactive color
+2. Customize active and inactive text
+3. Text color
+4. gradient background
+5. border color
+6. Supports Null-safety
+
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/sampathnarayanan72%40gmail.com)
 
 
