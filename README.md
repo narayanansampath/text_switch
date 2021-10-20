@@ -10,6 +10,10 @@ A Flutter package for awesome text switch.
 4. gradient background
 5. border color
 6. Supports Null-safety
+7. Active subtitle and inactive subtitle
+8. Custom height
+9. Leading widget for active and inactive text
+
 
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/sampathnarayanan72%40gmail.com)
 
