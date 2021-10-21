@@ -12,6 +12,11 @@ class TextSwitch extends StatefulWidget {
   final Color textColor;
   final Gradient? gradient;
   final Color borderColor;
+  final String? activeTextSubtitle;
+  final String? inActiveTextSubtitle;
+  final Widget? leadingActiveWidget;
+  final Widget? leadingInactiveWidget;
+  final double? height;
 
   const TextSwitch(
       {Key? key,
@@ -22,7 +27,12 @@ class TextSwitch extends StatefulWidget {
       this.activeText = 'On',
       this.inactiveText = 'Off',
       this.gradient,
+      this.activeTextSubtitle,
+      this.inActiveTextSubtitle,
+      this.leadingActiveWidget,
+      this.leadingInactiveWidget,
       this.borderColor = Colors.white,
+      this.height = 20,
       this.textColor = Colors.black})
       : super(key: key);
 
@@ -54,15 +64,13 @@ class _TextSwitchState extends State<TextSwitch>
       animation: _animationController,
       builder: (context, child) {
         return GestureDetector(
-          onTap: () {
-            performAnimation();
-          },
+          onTap: performAnimation,
           onHorizontalDragEnd: (update) {
             performAnimation();
           },
           child: Container(
-            width: 72.0,
-            height: 20.0,
+            width: double.infinity,
+            height: widget.height,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
                 color: widget.inactiveColor,
@@ -71,35 +79,108 @@ class _TextSwitchState extends State<TextSwitch>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Container(
-                  width: 35.0,
-                  height: 20.0,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: value ? widget.activeColor : Colors.transparent),
-                  child: Text(
-                    widget.activeText,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: widget.textColor,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 12.0),
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                    ),
+                    child: Container(
+                      height: widget.height,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: value ? widget.activeColor : Colors.transparent),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          if(widget.leadingActiveWidget != null)
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.grey.shade500),
+                            ),
+                            child: CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: widget.leadingActiveWidget!
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.activeText,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: widget.textColor,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 12.0),
+                              ),
+                              if(widget.activeTextSubtitle != null)
+                                Text(widget.activeTextSubtitle!,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2!
+                                        .copyWith(
+                                      color: Colors.grey.shade600,
+                                    )),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                Container(
-                  width: 35.0,
-                  height: 20.0,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: value ? Colors.transparent : widget.activeColor),
-                  child: Text(widget.inactiveText,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: widget.textColor,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 12.0)),
+                Flexible(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(10),
+                    ),
+                    child: Container(
+                      height: widget.height,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: value ? Colors.transparent : widget.activeColor),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          if(widget.leadingActiveWidget != null)
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.grey.shade500),
+                            ),
+                            child: CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: widget.leadingInactiveWidget!
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(widget.inactiveText,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: widget.textColor,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 12.0)),
+                    if(widget.inActiveTextSubtitle != null)
+                Text(widget.inActiveTextSubtitle!,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2!
+                        .copyWith(
+                      color: Colors.grey.shade600,
+                    )),
+
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
